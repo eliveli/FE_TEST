@@ -2,20 +2,28 @@ import React from "react";
 import {Button, Grid, Text} from "../elements";
 import Table from "../component/Table";
 import styled from "styled-components";
-import {Context, fetchData} from "../context/ResultContext";
+import {Context, fetchData, cancleChoice} from "../context/ResultContext";
+import { ReactComponent as Cancle } from "../image/cancle.svg";
+
 
 const Result = () => {
 
   const {state, contextDispatch} = React.useContext(Context);
+  const {result, choice} = state;
 
+  console.log(choice,"choice")
   //result 목록 불러오기
-  const result = state.result;
   React.useEffect(()=>{
-    if (state.result.length === 0){
+    if (result.length === 0){
       fetchData(contextDispatch);
     }
   }, []);
 
+
+  //선택 취소
+  const cancle = (choice) => {
+    cancleChoice(contextDispatch, choice);
+  }
 
   //컬럼 별 오름차순/내림차순 정렬
   const [upFox, handleUpFox] = React.useState(false);
@@ -60,6 +68,19 @@ const Result = () => {
         <Button margin="0 0 0 30px">download</Button>
       </Grid>
     </Grid>
+
+    {
+      choice.length !== 0 && (
+        <Grid bgColor="yellow">
+          {choice.map( _ =>
+            <Grid display="flex">
+              <Text margin="5px 10px">{_}</Text>
+              <Cancle onClick={()=>cancle(_)}></Cancle>
+            </Grid>
+          )}
+        </Grid>
+      )
+    }
     
     <Grid display="flex" justify="space-between" margin="10px">
       <Text>Name</Text>
@@ -67,7 +88,7 @@ const Result = () => {
       <Text _onClick={sortGolf}>Golf</Text>
     </Grid>
     {result?.map(_=>
-      <Table _={_}></Table>
+      <Table info={_}></Table>
     )}
     
   </Grid>
