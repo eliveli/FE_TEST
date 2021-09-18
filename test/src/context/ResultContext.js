@@ -28,12 +28,37 @@ export const fetchName = async (dispatch, findname) => {
     }
 }
 
+// 선택/취소 액션 함수
+export const setChoice = (dispatch, choice) => {
+    try{
+    dispatch({
+        type: "SET_CHOICE",
+        data: choice
+    })
+    }
+    catch (err) {
+    console.log(err, "setChoiceError")
+    }
+}
+
+export const cancleChoice = (dispatch, choice) => {
+    try{
+    dispatch({
+        type: "CANCLE_CHOICE",
+        data: choice
+    })
+    }
+    catch (err) {
+    console.log(err, "cancleChoiceError")
+    }
+}
+
   
   //================== 상태값 세팅 ===================//
   const initialState = {
       result: [],
       names: [],
-      select: [],
+      choice: [],
       
   };
   
@@ -49,6 +74,19 @@ export const fetchName = async (dispatch, findname) => {
         return {
           ...state,
           names: [...state.names, action.data]
+        };
+      case "SET_CHOICE":
+        return {
+          ...state,
+          choice: [...state.choice, action.data]
+        };
+      case "CANCLE_CHOICE":
+        const _state = state.choice.filter(_=>
+            _ !== action.data
+        )
+        return {
+          ...state,
+          choice: _state
         };
 
       default:
