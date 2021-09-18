@@ -1,8 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-//================== 데이터 패칭 함수 ===================//
-
+//데이터 패칭 함수
 export const fetchData = async (dispatch) => {
     try{
       const response = await axios.get("http://testapi.hits.ai/result");
@@ -14,7 +13,6 @@ export const fetchData = async (dispatch) => {
       console.log(err, "fetchDataError")
     }
   }
-
 export const fetchName = async (dispatch, findname) => {
     try{
     const response = await axios.get(`http://testapi.hits.ai/result/${findname}`);
@@ -27,6 +25,7 @@ export const fetchName = async (dispatch, findname) => {
     console.log(err, "fetchNameError")
     }
 }
+
 
 // 선택/취소 액션 함수
 export const setChoice = (dispatch, choice) => {
@@ -53,8 +52,35 @@ export const cancleChoice = (dispatch, choice) => {
     }
 }
 
+
+export const setChoices = (dispatch, infoName) => {
+    try{
+    dispatch({
+        type: "SET_CHOICES",
+        data: infoName
+    })
+    }
+    catch (err) {
+    console.log(err, "setChoicesError")
+    }
+}
+
+export const cancleChoices = (dispatch, infoName) => {
+    try{
+    dispatch({
+        type: "CANCLE_CHOICES",
+        data: infoName
+    })
+    }
+    catch (err) {
+    console.log(err, "cancleChoicesError")
+    }
+}
+
+
+
+
   
-  //================== 상태값 세팅 ===================//
   const initialState = {
       result: [],
       names: [],
@@ -62,7 +88,6 @@ export const cancleChoice = (dispatch, choice) => {
       
   };
   
-  //================== 리듀서 함수 ===================//
   const reducer = (state, action) => {
     switch (action.type) {
       case "SET_RESULT":
@@ -87,6 +112,24 @@ export const cancleChoice = (dispatch, choice) => {
         return {
           ...state,
           choice: _state
+        };
+
+    
+      case "SET_CHOICES":
+        const _choiceList = state.names.filter(_=> _.name === action.data)[0].info.map(_=>action.data + "-" + _[0]); //name에 속한 데이터로 리스트 구성
+        const choiceList = _choiceList.filter(_=> !state.choice.includes(_)); //기존 목록에 없는 choice 추가
+        return {
+          ...state,
+          choice: [...state.choice, ...choiceList]
+        };
+      case "CANCLE_CHOICES":
+        const cancleList = state.names.filter(_=> _.name === action.data)[0].info.map(_=>action.data + "-" + _[0]); //name에 속한 데이터로 리스트 구성
+        const afterCancles = state.choice.filter(_=>    //기존 목록에 포함된 choice 제거해 리스트 재구성
+            !cancleList.includes(_)
+        )
+        return {
+          ...state,
+          choice: afterCancles
         };
 
       default:

@@ -1,24 +1,24 @@
 import React from 'react';
 import {Button, Grid, Text} from "../elements";
 import styled from "styled-components";
-import {Context, fetchName} from "../context/ResultContext";
+import {Context, fetchName, setChoices, cancleChoices} from "../context/ResultContext";
 import SubTable from './SubTable';
 
 
 const Table = (props) => {
-    const {_} = props;
+    const {info} = props;
 
-    const findName = _[0];
+    const findName = info[0];
     const {state, contextDispatch} = React.useContext(Context);
 
     const [showSub, handleShowSub] = React.useState(false);
 
     //이름 별 서브테이블 불러오기
+    //주의: 불러온 데이터는 상수에 담아 사용. useState 이용 시 두번 째 시도에 state 반영됨..
     const nameInfo = state.names.filter(_=>_.name === findName)[0];
     const showDetail = () => {
         if (!nameInfo){
             fetchName(contextDispatch, findName);
-            console.log(nameInfo,"nameinfo")
         }
 
         if (showSub){
@@ -26,6 +26,13 @@ const Table = (props) => {
         } else{
             handleShowSub(true);
         }
+  }
+
+  const checkAll = () => {
+    setChoices(contextDispatch, info[0]);
+  }
+  const clear = () => {
+    cancleChoices(contextDispatch, info[0]);
   }
 
   //나중에 컴포넌트로 따로 빼기..
@@ -64,12 +71,16 @@ const Table = (props) => {
     <>
       <Grid display="flex" justify="space-between" margin="10px">
         <Text _onClick={showDetail}>{findName}</Text>
-        <Text>{_[1].toFixed(5)}</Text>
-        <Text>{_[2].toFixed(5)}</Text>
+        <Text>{info[1].toFixed(5)}</Text>
+        <Text>{info[2].toFixed(5)}</Text>
       </Grid>
 
       {showSub && 
         <>
+        <Grid display="flex">
+            <Button _onClick={checkAll} margin="0 5px 0 0">check all</Button>
+            <Button _onClick={clear}>clear</Button>
+        </Grid>
         <Grid display="flex" justify="space-between" margin="10px">
             <Text>id</Text>
             <Text _onClick={sortFox}>Foxtrot</Text>
@@ -77,7 +88,7 @@ const Table = (props) => {
         </Grid>
 
         {nameInfo?.info.map(_=>
-            <SubTable _={_}></SubTable>
+            <SubTable subInfo={_} name={findName}></SubTable>
         )}
         </>
     }
