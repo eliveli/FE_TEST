@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Grid, Text} from "../elements";
 import Table from "../component/Table";
 import styled from "styled-components";
-import {Context, fetchData, cancleChoice} from "../context/ResultContext";
+import {Context, fetchData, cancleChoice, closeSubtable} from "../context/ResultContext";
 import { ReactComponent as Cancle } from "../image/cancle.svg";
 
 
@@ -25,11 +25,11 @@ const Result = () => {
     cancleChoice(contextDispatch, choice);
   }
 
-  const [search, handleSearch] = React.useState();
-  const [showSearch, handleShowSearch] = React.useState(false);
-  const [searchResult, handleSearchResult] = React.useState();
+  //검색
+  const [search, handleSearch] = React.useState(null);
+  const [searchResult, handleSearchResult] = React.useState([]);
   const goSearch = () => {
-    handleShowSearch(true);
+    closeSubtable(contextDispatch);
     handleSearchResult(result.filter(_=>_[0].includes(search)));
   }
 
@@ -80,8 +80,8 @@ const Result = () => {
     {
       choice.length !== 0 && (
         <Grid bgColor="yellow">
-          {choice.map( _ =>
-            <Grid display="flex">
+          {choice.map((_, idx) =>
+            <Grid display="flex" key={idx}>
               <Text margin="5px 10px">{_}</Text>
               <Cancle onClick={()=>cancle(_)}></Cancle>
             </Grid>
@@ -96,12 +96,12 @@ const Result = () => {
       <Text _onClick={sortGolf}>Golf</Text>
     </Grid>
     {/* 전체 목록 */}
-    {!showSearch && result?.map(_=>
-      <Table info={_}></Table>
+    {searchResult.length === 0 && result?.map((_, idx)=>
+      <Table info={_} key={idx}></Table>
     )}
     {/* 검색 목록 */}
-    {showSearch &&  searchResult.map(_=>
-      <Table info={_}></Table>
+    {searchResult.length !== 0 && searchResult.map((_, idx)=>
+      <Table info={_} key={idx}></Table>
     )}
     
   </Grid>

@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-//데이터 패칭 함수
+//action creators (for fetching data)
 export const fetchData = async (dispatch) => {
     try{
       const response = await axios.get("http://testapi.hits.ai/result");
@@ -27,7 +27,7 @@ export const fetchName = async (dispatch, findname) => {
 }
 
 
-// 선택/취소 액션 함수
+// action creators (for choice or cancle)
 export const setChoice = (dispatch, choice) => {
     try{
     dispatch({
@@ -78,15 +78,25 @@ export const cancleChoices = (dispatch, infoName) => {
 }
 
 
-
+//action creators (to close previous subtables when searching)
+export const closeSubtable = (dispatch) => {
+    try{
+    dispatch({
+        type: "CLOSE_SUBTABLE",
+    })
+    }
+    catch (err) {
+    console.log(err, "closeSubtableError")
+    }
+}
 
   
-  const initialState = {
-      result: [],
-      names: [],
-      choice: [],
-      
-  };
+const initialState = {
+    result: [],
+    names: [],
+    choice: [],
+    closeNo: 0, 
+};
   
   const reducer = (state, action) => {
     switch (action.type) {
@@ -130,6 +140,13 @@ export const cancleChoices = (dispatch, infoName) => {
         return {
           ...state,
           choice: afterCancles
+        };
+
+      // search 시 기존 subtable 닫기 위한 상태 변경
+      case "CLOSE_SUBTABLE":
+        return {
+          ...state,
+          closeNo: ++state.closeNo
         };
 
       default:

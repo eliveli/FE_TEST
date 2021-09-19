@@ -10,12 +10,17 @@ const Table = (props) => {
 
     const findName = info[0];
     const {state, contextDispatch} = React.useContext(Context);
-
+    const {names, closeNo} = state;
     const [showSub, handleShowSub] = React.useState(false);
 
+    //검색 직후 서브테이블 제목 닫기
+    React.useEffect(()=>{
+      handleShowSub(false);
+    }, [closeNo]);
+
     //이름 별 서브테이블 불러오기
-    //주의: 불러온 데이터는 상수에 담아 사용. useState 이용 시 두번 째 시도에 state 반영됨..
-    const nameInfo = state.names.filter(_=>_.name === findName)[0];
+    //주의: (O)불러온 데이터는 상수에 담아 사용. (X)useState 이용 시 두번 째 시도에 state 반영됨..
+    const nameInfo = names.filter(_=>_.name === findName)[0];
     const showDetail = () => {
         if (!nameInfo){
             fetchName(contextDispatch, findName);
@@ -87,9 +92,10 @@ const Table = (props) => {
             <Text _onClick={sortGolf}>Golf</Text>
         </Grid>
 
-        {nameInfo?.info.map(_=>
-            <SubTable subInfo={_} name={findName}></SubTable>
-        )}
+        {nameInfo?.info.map((_, idx)=>{
+          return <SubTable subInfo={_} name={findName} key={idx}></SubTable>
+        })
+        }
         </>
     }
     </>
