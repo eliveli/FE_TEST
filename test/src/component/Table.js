@@ -34,10 +34,10 @@ const Table = (props) => {
   }
 
   const checkAll = () => {
-    setChoices(contextDispatch, info[0]);
+    setChoices(contextDispatch, findName);
   }
   const clear = () => {
-    cancleChoices(contextDispatch, info[0]);
+    cancleChoices(contextDispatch, findName);
   }
 
   //나중에 컴포넌트로 따로 빼기..
@@ -74,28 +74,28 @@ const Table = (props) => {
         }
     return (
     <>
-      <Grid display="flex" justify="space-between" margin="10px">
-        <Text _onClick={showDetail}>{findName}</Text>
-        <Text>{info[1].toFixed(5)}</Text>
-        <Text>{info[2].toFixed(5)}</Text>
+      <Grid width="100%" display="flex" justify="space-between" margin="10px">
+        <Text isCenter={true} _onClick={showDetail}>{findName}</Text>
+        <Text isCenter={true}>{info[1]}</Text>
+        <Text isCenter={true}>{info[2]}</Text>
       </Grid>
 
       {showSub && 
         <>
-        <Grid display="flex">
-            <Button _onClick={checkAll} margin="0 5px 0 0">check all</Button>
-            <Button _onClick={clear}>clear</Button>
-        </Grid>
-        <Grid display="flex" justify="space-between" margin="10px">
-            <Text>id</Text>
-            <Text _onClick={sortFox}>Foxtrot</Text>
-            <Text _onClick={sortGolf}>Golf</Text>
-        </Grid>
+          <Grid display="flex">
+              <Button _onClick={checkAll} margin="0 5px 0 0">check all</Button>
+              <Button _onClick={clear}>clear</Button>
+          </Grid>
+          <Grid width="100%" display="flex" justify="space-between" margin="10px">
+              <Text isCenter={true}>id</Text>
+              <Text isCenter={true} _onClick={sortFox}>Foxtrot</Text>
+              <Text isCenter={true} _onClick={sortGolf}>Golf</Text>
+          </Grid>
 
-        {nameInfo?.info.map((_, idx)=>{
-          return <SubTable subInfo={_} name={findName} key={idx}></SubTable>
-        })
-        }
+          {nameInfo?.info.map((_, idx)=>{
+            return <SubTable subInfo={_} name={findName} key={idx}></SubTable>
+          })
+          }
         </>
     }
     </>
