@@ -3,7 +3,9 @@ import {Button, Grid, Text} from "../elements";
 import styled from "styled-components";
 import {Context, fetchName, setChoices, cancleChoices} from "../context/ResultContext";
 import SubTable from './SubTable';
-import {Sort} from "../shared/Sort";
+import { ReactComponent as SortUp } from "../image/SortUp.svg";
+import { ReactComponent as SortDown } from "../image/SortDown.svg";
+
 
 const Table = (props) => {
     const {info} = props;
@@ -39,9 +41,38 @@ const Table = (props) => {
     cancleChoices(contextDispatch, findName);
   }
 
-  //컬럼 별 정렬
-  const {sortFox, sortGolf} = Sort();
-
+    //정렬하기
+    const [upFox, handleUpFox] = React.useState(false);
+    const [upGolf, handleUpGolf] = React.useState(false);
+    const sort = (no, isUp) => {
+      nameInfo?.info.sort(function(a, b) { 
+        if (isUp){
+          return a[no] - b[no]; 
+        } else {
+          return b[no] - a[no]; 
+        }
+      });
+  
+    }
+    const sortFox = (isUp) => {
+      if (isUp){
+          handleUpFox(true);
+          sort(1, true);
+      } else{
+          handleUpFox(false);
+          sort(1, false);
+      }
+    }
+    const sortGolf = (isUp) => {
+      if (isUp){
+        handleUpGolf(true);
+        sort(2, true);
+      } else{
+        handleUpGolf(false);
+        sort(2, false);
+      }
+    }
+  
     return (
     <>
       <Grid width="100%" display="flex" justify="space-between" margin="10px">
@@ -58,8 +89,20 @@ const Table = (props) => {
           </Grid>
           <Grid width="100%" display="flex" justify="space-between" margin="10px">
               <Text isCenter={true}>id</Text>
-              <Text isCenter={true} _onClick={()=>sortFox(nameInfo?.info)}>Foxtrot</Text>
-              <Text isCenter={true} _onClick={()=>sortGolf(nameInfo?.info)}>Golf</Text>
+              <Grid isCenter={true} display="flex">
+                <Text>Foxtrot</Text>
+                <Grid sortBtn={true}>
+                  <SortUp onClick={()=>sortFox(true)} style={{cursor: "pointer"}}></SortUp>
+                  <SortDown onClick={()=>sortFox(false)} style={{cursor: "pointer"}}></SortDown>
+              </Grid>
+              </Grid>
+              <Grid isCenter={true} display="flex">
+                <Text>Golf</Text>
+                <Grid sortBtn={true}>
+                  <SortUp onClick={()=>sortGolf(true)} style={{cursor: "pointer"}}></SortUp>
+                  <SortDown onClick={()=>sortGolf(false)} style={{cursor: "pointer"}}></SortDown>
+              </Grid>
+              </Grid>
           </Grid>
 
           {nameInfo?.info.map((_, idx)=>{
