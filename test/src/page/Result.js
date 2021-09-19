@@ -25,6 +25,14 @@ const Result = () => {
     cancleChoice(contextDispatch, choice);
   }
 
+  const [search, handleSearch] = React.useState();
+  const [showSearch, handleShowSearch] = React.useState(false);
+  const [searchResult, handleSearchResult] = React.useState();
+  const goSearch = () => {
+    handleShowSearch(true);
+    handleSearchResult(result.filter(_=>_[0].includes(search)));
+  }
+
   //컬럼 별 오름차순/내림차순 정렬
   const [upFox, handleUpFox] = React.useState(false);
   const [upGolf, handleUpGolf] = React.useState(false);
@@ -63,8 +71,8 @@ const Result = () => {
     <Grid display="flex" justify="space-between" margin="10px">
       <Text>Result</Text>
       <Grid margin="0 10px 0 0" display="flex">
-        <Inp></Inp>
-        <Button>search</Button>
+        <Inp onChange={(e)=>handleSearch(e.target.value)} value={search}></Inp>
+        <Button _onClick={goSearch}>search</Button>
         <Button margin="0 0 0 30px">download</Button>
       </Grid>
     </Grid>
@@ -87,7 +95,12 @@ const Result = () => {
       <Text _onClick={sortFox}>Foxtrot</Text>
       <Text _onClick={sortGolf}>Golf</Text>
     </Grid>
-    {result?.map(_=>
+    {/* 전체 목록 */}
+    {!showSearch && result?.map(_=>
+      <Table info={_}></Table>
+    )}
+    {/* 검색 목록 */}
+    {showSearch &&  searchResult.map(_=>
       <Table info={_}></Table>
     )}
     
