@@ -5,13 +5,11 @@ import styled from "styled-components";
 import {Context, fetchData, cancleChoice, closeSubtable} from "../context/ResultContext";
 import { ReactComponent as Cancle } from "../image/cancle.svg";
 
-
 const Result = () => {
 
   const {state, contextDispatch} = React.useContext(Context);
   const {result, choice} = state;
 
-  console.log(choice,"choice")
   //result 목록 불러오기
   React.useEffect(()=>{
     if (result.length === 0){
@@ -26,11 +24,19 @@ const Result = () => {
   }
 
   //검색
-  const [search, handleSearch] = React.useState(null);
+  const [search, handleSearch] = React.useState("");
   const [searchResult, handleSearchResult] = React.useState([]);
+  const [filterList, handleFilterList] = React.useState(false);
   const goSearch = () => {
     closeSubtable(contextDispatch);
     handleSearchResult(result.filter(_=>_[0].includes(search)));
+    handleFilterList(true);
+  }
+  //전체보기
+  const showAll = () => {
+    handleSearch("");
+    handleSearchResult([]);
+    handleFilterList(false);
   }
 
   //컬럼 별 오름차순/내림차순 정렬
@@ -71,8 +77,11 @@ const Result = () => {
     <Grid display="flex" justify="space-between" margin="10px">
       <Text>Result</Text>
       <Grid margin="0 10px 0 0" display="flex">
-        <Inp onChange={(e)=>handleSearch(e.target.value)} value={search}></Inp>
+        <Inp onChange={(e)=>handleSearch(e.target.value)} value={search}
+            placeholder="이름으로 검색하세요"
+        ></Inp>
         <Button _onClick={goSearch}>search</Button>
+        <Button _onClick={showAll}>show all</Button>
         <Button margin="0 0 0 30px">download</Button>
       </Grid>
     </Grid>
@@ -96,13 +105,17 @@ const Result = () => {
       <Text _onClick={sortGolf}>Golf</Text>
     </Grid>
     {/* 전체 목록 */}
-    {searchResult.length === 0 && result?.map((_, idx)=>
+    {!filterList && result?.map((_, idx)=>
       <Table info={_} key={idx}></Table>
     )}
     {/* 검색 목록 */}
-    {searchResult.length !== 0 && searchResult.map((_, idx)=>
+    {filterList && searchResult.length !== 0 && searchResult.map((_, idx)=>
       <Table info={_} key={idx}></Table>
     )}
+    {filterList && searchResult.length === 0 && (
+      <Text>검색 결과가 없습니다.</Text>
+    )
+    }
     
   </Grid>
   )
