@@ -3,14 +3,13 @@ import {Button, Grid, Text} from "../elements";
 import styled from "styled-components";
 import {Context, fetchName, setChoices, cancleChoices} from "../context/ResultContext";
 import SubTable from './SubTable';
-
+import {Sort} from "../shared/Sort";
 
 const Table = (props) => {
     const {info} = props;
 
     const findName = info[0];
-    const {state, contextDispatch} = React.useContext(Context);
-    const {names, closeNo} = state;
+    const {state : {names, closeNo}, contextDispatch} = React.useContext(Context);
     const [showSub, handleShowSub] = React.useState(false);
 
     //검색 직후 서브테이블 제목 닫기
@@ -40,38 +39,9 @@ const Table = (props) => {
     cancleChoices(contextDispatch, findName);
   }
 
-  //나중에 컴포넌트로 따로 빼기..
-    //컬럼 별 오름차순/내림차순 정렬
-        const [upFox, handleUpFox] = React.useState(false);
-        const [upGolf, handleUpGolf] = React.useState(false);
-      
-        const sort = (no, isUp) => {
-            nameInfo.info.sort(function(a, b) { 
-            if (isUp){
-              return a[no] - b[no]; 
-            } else {
-              return b[no] - a[no]; 
-            }
-          });
-        }
-        const sortFox = () => {
-          if (upFox){
-            handleUpFox(false);
-            sort(1, false);
-          } else{
-            handleUpFox(true);
-            sort(1, true);
-          }
-        }
-        const sortGolf = () => {
-          if (upGolf){
-            handleUpGolf(false);
-            sort(2, false);
-          } else{
-            handleUpGolf(true);
-            sort(2, true);
-          }
-        }
+  //컬럼 별 정렬
+  const {sortFox, sortGolf} = Sort();
+
     return (
     <>
       <Grid width="100%" display="flex" justify="space-between" margin="10px">
@@ -88,8 +58,8 @@ const Table = (props) => {
           </Grid>
           <Grid width="100%" display="flex" justify="space-between" margin="10px">
               <Text isCenter={true}>id</Text>
-              <Text isCenter={true} _onClick={sortFox}>Foxtrot</Text>
-              <Text isCenter={true} _onClick={sortGolf}>Golf</Text>
+              <Text isCenter={true} _onClick={()=>sortFox(nameInfo?.info)}>Foxtrot</Text>
+              <Text isCenter={true} _onClick={()=>sortGolf(nameInfo?.info)}>Golf</Text>
           </Grid>
 
           {nameInfo?.info.map((_, idx)=>{

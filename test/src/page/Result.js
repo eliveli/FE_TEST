@@ -4,11 +4,11 @@ import Table from "../component/Table";
 import styled from "styled-components";
 import {Context, fetchData, cancleChoice, closeSubtable} from "../context/ResultContext";
 import { ReactComponent as Cancle } from "../image/cancle.svg";
+import {Sort} from "../shared/Sort";
 
 const Result = () => {
 
-  const {state, contextDispatch} = React.useContext(Context);
-  const {result, choice} = state;
+  const {state : {result, choice}, contextDispatch} = React.useContext(Context);
 
   //result 목록 불러오기
   React.useEffect(()=>{
@@ -39,38 +39,8 @@ const Result = () => {
     handleFilterList(false);
   }
 
-  //컬럼 별 오름차순/내림차순 정렬
-  const [upFox, handleUpFox] = React.useState(false);
-  const [upGolf, handleUpGolf] = React.useState(false);
-
-  const sort = (no, isUp) => {
-    result.sort(function(a, b) { 
-      if (isUp){
-        return a[no] - b[no]; 
-      } else {
-        return b[no] - a[no]; 
-      }
-    });
-  }
-  const sortFox = () => {
-    if (upFox){
-      handleUpFox(false);
-      sort(1, false);
-    } else{
-      handleUpFox(true);
-      sort(1, true);
-    }
-  }
-  const sortGolf = () => {
-    if (upGolf){
-      handleUpGolf(false);
-      sort(2, false);
-    } else{
-      handleUpGolf(true);
-      sort(2, true);
-    }
-  }
-  
+    //컬럼 별 정렬
+    const {sortFox, sortGolf} = Sort(); 
 
   return(
   <Grid padding="10px" position="relative" top="50px" margin="0 auto" width="700px">
@@ -86,6 +56,7 @@ const Result = () => {
       </Grid>
     </Grid>
 
+  {/* 선택 항목 표시 */}
     {
       choice.length !== 0 && (
         <Grid bgColor="yellow">
@@ -99,10 +70,10 @@ const Result = () => {
       )
     }
     
-    <Grid display="flex" justify="space-between" margin="10px">
-      <Text>Name</Text>
-      <Text _onClick={sortFox}>Foxtrot</Text>
-      <Text _onClick={sortGolf}>Golf</Text>
+    <Grid width="100%" display="flex" justify="space-between" margin="10px">
+      <Text isCenter={true}>Name</Text>
+      <Text isCenter={true} _onClick={()=>sortFox(result)}>Foxtrot</Text>
+      <Text isCenter={true} _onClick={()=>sortGolf(result)}>Golf</Text>
     </Grid>
     {/* 전체 목록 */}
     {!filterList && result?.map((_, idx)=>
