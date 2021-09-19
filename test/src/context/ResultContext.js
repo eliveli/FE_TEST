@@ -18,11 +18,34 @@ export const fetchName = async (dispatch, findname) => {
     const response = await axios.get(`http://testapi.hits.ai/result/${findname}`);
     dispatch({
         type: "SET_NAME",
-        data: {info: response.data, name: findname}
+        data: {info: response.data, name: findname, isSorted: false}
     })
     }
     catch (err) {
     console.log(err, "fetchNameError")
+    }
+}
+
+// action creators (for sorting data)
+export const sortData = async (dispatch, list) => {
+    try{
+      dispatch({
+        type: "SET_RESULT",
+        data: list
+    })
+    } catch (err) {
+      console.log(err, "sortDataError")
+    }
+  }
+export const sortName = async (dispatch, list, findname) => {
+    try{
+    dispatch({
+        type: "SET_NAME",
+        data: {info: list, name: findname, isSorted: true}
+    })
+    }
+    catch (err) {
+    console.log(err, "sortNameError")
     }
 }
 
@@ -100,28 +123,46 @@ const initialState = {
   
   const reducer = (state, action) => {
     switch (action.type) {
+
       case "SET_RESULT":
-        // 소수점 변환 후 저장
-        const list = action.data.map(_=>{
-          _[1] = _[1].toFixed(5);
-          _[2] = _[2].toFixed(5);
-          return _;
-        })
+        let list = [];
+        // 최초 result 불러온 경우 소수점 자리변환 후 저장
+        if(state.result.length === 0){
+          list = action.data.map(_=>{
+            _[1] = _[1].toFixed(5);
+            _[2] = _[2].toFixed(5);
+            return _;
+          })
+        }
+        // 기존 result 정렬한 경우 교체 저장
+        else {
+          list = action.data
+        }  
         return {
           ...state,
           result: list
         };
+
       case "SET_NAME":
-        // 소수점 변환 후 저장
-        const infoList = action.data.info.map(_=>{
-          _[1] = _[1].toFixed(5);
-          _[2] = _[2].toFixed(5);
-          return _;
-        })
+        let infoList = [];
+        // 최초 name 불러온 경우 소수점 자리변환 후 저장
+        if (!action.data.isSorted) {
+          infoList = action.data.info.map(_=>{
+            _[1] = _[1].toFixed(5);
+            _[2] = _[2].toFixed(5);
+            return _;
+          })
+        }
+        // 기존 name 정렬한 경우 교체 저장
+        else {
+          infoList = action.data.info;
+        }
+
         return {
           ...state,
           names: [...state.names, {name: action.data.name, info: infoList}]
         };
+        
         
       case "SET_CHOICE":
         return {
