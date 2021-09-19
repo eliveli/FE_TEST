@@ -101,15 +101,28 @@ const initialState = {
   const reducer = (state, action) => {
     switch (action.type) {
       case "SET_RESULT":
+        // 소수점 변환 후 저장
+        const list = action.data.map(_=>{
+          _[1] = _[1].toFixed(5);
+          _[2] = _[2].toFixed(5);
+          return _;
+        })
         return {
           ...state,
-          result: action.data
+          result: list
         };
       case "SET_NAME":
+        // 소수점 변환 후 저장
+        const infoList = action.data.info.map(_=>{
+          _[1] = _[1].toFixed(5);
+          _[2] = _[2].toFixed(5);
+          return _;
+        })
         return {
           ...state,
-          names: [...state.names, action.data]
+          names: [...state.names, {name: action.data.name, info: infoList}]
         };
+        
       case "SET_CHOICE":
         return {
           ...state,
@@ -157,7 +170,7 @@ const initialState = {
   //context
   export const Context = React.createContext(null);
   
-  // 위에서 선언한 Context의 Provider로 감싸주는 컴포넌트
+  //context provider
   export const ContextProvider = ({ children }) => {
     const [state, contextDispatch] = React.useReducer(reducer, initialState);
   
