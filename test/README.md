@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+# HITS frontend 과제
+<사이트 이용법>
+- result 메인 테이블에서
+	- Foxtrot, Golf 오른쪽 상하 버튼으로 각각 오름차순/내림차순 정렬
+	- 특정 name 선택 시 name 별 서브테이블 열기/닫기
+- 각 name 별 서브테이블에서
+	-  id 값 선택 시 해당 서브테이블 및 페이지 상단에 선택 값 표시
+	-  check all, clear 버튼을 통해 name의 id 값 모두 선택 또는 선택 취소
+	- Foxtrot, Golf 오른쪽 상하 버튼으로 각각 오름차순/내림차순 정렬
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 페이지 상단에 위치한 선택 값 표시 영역에서
+	- X 버튼 눌러 해당 값 선택 취소
+- name 검색 시
+	-  [search] 버튼
+		- 검색어가 부분 또는 전체적으로 포함된 데이터를 화면에 출력
+		- 검색 결과가 없을 때 화면에 문구 표시
+		- 검색된 테이블에서도 name 별 서브테이블 불러오기 또는 id 선택/선택해제
+		- 서브테이블을 닫지 않고 검색 시 서브테이블이 닫히면서 검색 결과 표시
+	- [show All] 버튼
+		- 전체 목록 보여줌(not 검색)
+- 최상단 이동 버튼 (화면 우측 하단 위치)
+	- 스크롤이 내려갔을 때 클릭 시 화면 최상단으로 이동
+- 미사용 버튼 클릭 시 (내비게이션 바의 버튼 (Alpha, Bravo, ...) 및 download 버튼)
+	- 서비스 개선 중이라는 메세지 안내(사라지는 애니메이션...)
