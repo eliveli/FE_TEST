@@ -197,7 +197,7 @@ const CntAlertStyle = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 99px;
-  background-color: #333333;
+  background-color: #525252;
 
   line-height: 32px;
   text-align: center;
