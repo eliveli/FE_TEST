@@ -54,7 +54,6 @@ const Result = () => {
   const [upFox, handleUpFox] = React.useState(false);
   const [upGolf, handleUpGolf] = React.useState(false);
   const sort = (no, isUp) => {
-    console.log(tempResult,"tempResult이전")
     tempResult.sort(function(a, b) { 
       if (isUp){
         return a[no] - b[no]; 
@@ -62,7 +61,6 @@ const Result = () => {
         return b[no] - a[no]; 
       }
     });
-    console.log(tempResult,"tempResult이후")
 
     plusNumber(number+1);
   }
@@ -199,7 +197,7 @@ const CntAlertStyle = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 99px;
-  background-color: #C6C6C6;
+  background-color: #333333;
 
   line-height: 32px;
   text-align: center;
