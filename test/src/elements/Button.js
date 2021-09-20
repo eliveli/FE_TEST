@@ -20,6 +20,7 @@ const Button = (props) => {
     size,
     disabled,
     src,
+    lineHeight
   } = props;
 
   const styles = {
@@ -37,6 +38,7 @@ const Button = (props) => {
     size: size,
     disabled: disabled,
     src: src,
+    lineHeight:lineHeight,
   };
 
   if (shape === "circle") {
@@ -86,6 +88,7 @@ Button.defaultProps = {
   size: 0,
   src: "",
   disabled: false,
+  lineHeight:"",
 };
 
 const ElCircleButton = styled.button`
@@ -161,7 +164,7 @@ const ElButton = styled.button`
   justify-content: center;
   align-items: center;
   white-space: nowrap;
-
+  line-height:${(props)=>props.lineHeight};
 
   &:focus,
   &:active {
