@@ -75,29 +75,35 @@ const Table = (props) => {
   
     return (
     <>
-      <Grid width="100%" display="flex" justify="space-between" margin="10px">
-        <Text isCenter={true} _onClick={showDetail}>{findName}</Text>
+      <Grid width="100%" height="71px" display="flex" justify="space-between" borderBottom="1px solid rgba(0, 0, 0, 0.3)">
+        <Grid isCenter={true} >
+          <Button minWidth="140px" height="40px" border="1px solid #0D9991" color="#0D9991" _onClick={showDetail}>{findName}</Button>
+        </Grid>
         <Text isCenter={true}>{info[1]}</Text>
-        <Text isCenter={true}>{info[2]}</Text>
+        <Text isCenter={true} padding="0 10px 0 0">{info[2]}</Text>
       </Grid>
 
       {showSub && 
-        <>
-          <Grid display="flex">
-              <Button _onClick={checkAll} margin="0 5px 0 0">check all</Button>
-              <Button _onClick={clear}>clear</Button>
+        <Grid padding="20px 40px 0">
+          <Grid display="flex" width="100%" justify="space-between">
+            <Grid display="flex" width="100%" justify="center">
+              <Button width="102px" border="1px solid #7879F1" color="#7879F1"_onClick={checkAll} margin="0 12px 0 0" fontSize="18px">check all</Button>
+              <Button width="102px" border="1px solid rgba(255, 0, 0, 0.65)" color="rgba(255, 0, 0, 0.65)" _onClick={clear} fontSize="18px">clear</Button>
+            </Grid>
+            <Grid width="100%" />
+            <Grid width="100%" />
           </Grid>
-          <Grid width="100%" display="flex" justify="space-between" margin="10px">
+          <Grid width="100%" display="flex" justify="space-between" borderBottom="1px solid black">
               <Text isCenter={true}>id</Text>
               <Grid isCenter={true} display="flex">
-                <Text>Foxtrot</Text>
+                <Text padding="0 7px 0 0">Foxtrot</Text>
                 <Grid sortBtn={true}>
                   <SortUp onClick={()=>sortFox(true)} style={{cursor: "pointer"}}></SortUp>
                   <SortDown onClick={()=>sortFox(false)} style={{cursor: "pointer"}}></SortDown>
               </Grid>
               </Grid>
               <Grid isCenter={true} display="flex">
-                <Text>Golf</Text>
+                <Text padding="0 7px 0 0">Golf</Text>
                 <Grid sortBtn={true}>
                   <SortUp onClick={()=>sortGolf(true)} style={{cursor: "pointer"}}></SortUp>
                   <SortDown onClick={()=>sortGolf(false)} style={{cursor: "pointer"}}></SortDown>
@@ -109,7 +115,7 @@ const Table = (props) => {
             return <SubTable subInfo={_} name={findName} key={idx}></SubTable>
           })
           }
-        </>
+        </Grid>
     }
     </>
     );

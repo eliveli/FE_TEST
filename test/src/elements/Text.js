@@ -13,6 +13,11 @@ const Text = (props) => {
     fontSize,
     fontWeight,
     whiteSpace,
+    textAlign,
+    _onClick,
+    isCenter,
+    borderBottom,
+    cursor
   } = props;
 
   const styles = {
@@ -25,26 +30,34 @@ const Text = (props) => {
     fontSize: fontSize,
     fontWeight: fontWeight,
     whiteSpace: whiteSpace,
+    textAlign: textAlign,
+    isCenter: isCenter,
+    borderBottom: borderBottom,
+    cursor: cursor
   };
 
   return (
     <React.Fragment>
-      <ElP {...styles}>{children}</ElP>
+      <ElP {...styles} onClick={_onClick}>{children}</ElP>
     </React.Fragment>
   );
 };
 
 Text.defaultProps = {
   children: null,
-  width: false,
-  height: false,
-  padding: false,
-  margin: false,
-  color: false,
-  bgColor: false,
-  fontSize: false,
-  fontWeight: false,
+  width: "",
+  height: "",
+  padding: "",
+  margin: "",
+  color: "",
+  bgColor: "",
+  fontSize: "24px",
+  fontWeight: "600",
   whiteSpace: "nowrap",
+  textAlign: "",
+  borderBottom: "",
+  isCenter: false,
+  cursor: "",
 };
 
 const ElP = styled.p`
@@ -52,11 +65,17 @@ const ElP = styled.p`
   height: ${(props) => props.height};
   padding: ${(props) => props.padding};
   margin: ${(props) => props.margin};
-  color: ${(props) => props.color};
   background-color: ${(props) => props.bgColor};
+  border-bottom: ${(props)=>props.borderBottom};
+
+  color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
+  text-align: ${(props) => props.textAlign};
   white-space: ${(props) => props.whiteSpace};
+  
+  ${(props)=>props.isCenter? "display:flex; justify-content:center; align-items: center; width:100%;" : ""}
+  ${(props)=>props.cursor? "cursor:pointer;":""}
 `;
 
 export default Text;

@@ -108,44 +108,59 @@ const Result = () => {
 // }
 
   return(
-  <Grid padding="10px" position="relative" top="50px" margin="0 auto" width="700px">
-    <Grid display="flex" justify="space-between" margin="10px">
-      <Text>Result</Text>
-      <Grid margin="0 10px 0 0" display="flex">
+  <Grid borderTop="3px solid #f4f4f4" position="relative" top="68px" margin="0 auto" >
+
+    <Grid display="flex" justify="space-between" align="center" borderBottom="8px solid #f4f4f4" height="100%">
+      <Grid display="flex" gap="40px" align="center" color="#C6C6C6" height="100%" >
+        <Text cursor={true} margin="0 0 0 20px" padding="10px 0">Alpha</Text>
+        <Text cursor={true} margin="0" padding="15px 0">Bravo</Text>
+        <Text cursor={true} margin="0" padding="15px 0">Charlie</Text>
+        <Text cursor={true} margin="0" padding="15px 0">Delta</Text>
+        <Text cursor={true} margin="0" padding="15px 0">Echo</Text>
+        <Text cursor={true} margin="0" borderBottom="5px solid #212121" color="#212121" padding="15px 0">Result</Text>
+      </Grid>
+      <Text margin="0 20px 0 0" color="#6F6F6F">project name</Text>
+    </Grid>
+
+    <Grid display="flex" justify="space-between" align="center" padding="79px 0 48px" height="55px" borderBottom="1px solid #0D9991">
+      <Text fontSize="32px">Result</Text>
+      <Grid margin="0 10px 0 0" display="flex" height="100%">
         <Inp onChange={(e)=>handleSearch(e.target.value)} value={search}
-            placeholder="이름으로 검색하세요"
+            placeholder="search by name"
         ></Inp>
-        <Button _onClick={goSearch}>search</Button>
-        <Button _onClick={showAll}>show all</Button>
-        <Button margin="0 0 0 30px">download</Button>
+        <Button _onClick={goSearch} margin="0 0 0 0.5px" padding="0 14px" border="1px solid #7879F1" height="100%" color="#7879F1">search</Button>
+        <Button _onClick={showAll} margin="0 0 0 0.5px" padding="0 14px" border="1px solid #7879F1" height="100%" color="#7879F1">All</Button>
+        <Button margin="0 0 0 26px" padding="0 10px"  border="1px solid #7879F1" height="100%" color="#7879F1">download</Button>
       </Grid>
     </Grid>
 
   {/* 선택 항목 표시 */}
     {
       choice.length !== 0 && (
-        <Grid bgColor="yellow">
+        <Grid bgColor="rgba(158, 214, 211, 1)" margin="10px 0 0 0" padding='12px 19px' display="flex" flexDir="column" gap="12px">
           {choice.map((_, idx) =>
-            <Grid display="flex" key={idx}>
-              <Text margin="5px 10px">{_}</Text>
-              <Cancle onClick={()=>cancle(_)}></Cancle>
+            <Grid display="flex" key={idx} align="center">
+              <Text width="140px" margin="0 10px 0 0">{_}</Text>
+              <Cancle onClick={()=>cancle(_)} style={{ cursor: "pointer"}}></Cancle>
             </Grid>
           )}
         </Grid>
       )
     }
     
-    <Grid width="100%" display="flex" justify="space-between" margin="10px">
+    <Grid width="100%" display="flex" justify="space-between" borderBottom="1px solid black">
       <Text isCenter={true}>Name</Text>
+
       <Grid isCenter={true} display="flex">
-        <Text>Foxtrot</Text>
+        <Text  padding="0 7px 0 0">Foxtrot</Text>
         <Grid sortBtn={true}>
             <SortUp onClick={()=>sortFox(true)} style={{cursor: "pointer"}}></SortUp>
             <SortDown onClick={()=>sortFox(false)} style={{cursor: "pointer"}}></SortDown>
         </Grid>
       </Grid>
+
       <Grid isCenter={true} display="flex">
-        <Text>Golf</Text>
+        <Text  padding="0 7px 0 0">Golf</Text>
         <Grid sortBtn={true}>
             <SortUp onClick={()=>sortGolf(true)} style={{cursor: "pointer"}}></SortUp>
             <SortDown onClick={()=>sortGolf(false)} style={{cursor: "pointer"}}></SortDown>
@@ -162,7 +177,7 @@ const Result = () => {
       <Table info={_} key={idx}></Table>
     )}
     {filterList && searchResult.length === 0 && (
-      <Text>검색 결과가 없습니다.</Text>
+      <Text color="gray">&nbsp;&nbsp;검색 결과가 없습니다.</Text>
     )
     }
     
@@ -171,7 +186,18 @@ const Result = () => {
 };
 
 const Inp = styled.input`
-
+  max-width: 220px;
+  border: 1px solid #7879F1;
+  padding-left: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  &:focus, &:active{
+    outline: none;
+  }
+  &::placeholder {
+    font-weight: 300;
+    color:#c6c6c6;
+  }
 `
 
 export default Result;

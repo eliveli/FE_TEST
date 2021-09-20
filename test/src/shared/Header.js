@@ -4,7 +4,7 @@ import {Grid} from "../elements";
 
 const Header = () => {
   return(
-    <Grid position="fixed"> 
+    <Grid position="fixed" top="0" zIndex="2" width="100%" bgColor="white"> 
       <Logo />
     </Grid>
   )

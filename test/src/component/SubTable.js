@@ -6,8 +6,7 @@ import {Context, setChoice} from "../context/ResultContext";
 const SubTable = (props) => {
     const {subInfo, name} = props;
 
-    const {state, contextDispatch} = React.useContext(Context);
-    const {choice} = state;
+    const {state : {choice}, contextDispatch} = React.useContext(Context);
 
     // 항목 선택
     const subName = name + "-" + subInfo[0];
@@ -19,11 +18,15 @@ const SubTable = (props) => {
     }
 
     return (
-      <Grid width="100%" _onClick={select} bgColor={isSelected? "yellow" : ""}
-            display="flex" justify="space-between" margin="10px">
-        <Text isCenter={true}>{subInfo[0]}</Text>
+      <Grid width="100%" height="71px" display="flex" justify="space-between" borderBottom="1px solid rgba(0, 0, 0, 0.3)"
+            _onClick={select} bgColor={isSelected? "#e0e0e0" : ""} >
+        <Grid isCenter={true}>
+            <Button border="none" bgColor="transparent">
+                {subInfo[0]}
+            </Button>
+        </Grid>
         <Text isCenter={true}>{subInfo[1]}</Text>
-        <Text isCenter={true}>{subInfo[2]}</Text>
+        <Text isCenter={true} padding="0 10px 0 0">{subInfo[2]}</Text>
       </Grid>
     );
 };

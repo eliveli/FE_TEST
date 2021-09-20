@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { Color } from "../shared/common";
 
 const Button = (props) => {
   const {
     _onClick,
     children,
     width,
+    minWidth,
     height,
     padding,
     margin,
@@ -24,6 +24,7 @@ const Button = (props) => {
 
   const styles = {
     width: width,
+    minWidth: minWidth,
     height: height,
     padding: padding,
     margin: margin,
@@ -71,15 +72,16 @@ Button.defaultProps = {
   _onClick: () => {},
   children: null,
   width: "auto",
+  minWidth: "",
   height: "auto",
-  padding: "15px 16px",
+  padding: "",
   margin: 0,
-  color: Color.gray700,
-  bgColor: Color.white,
-  fontSize: "16px",
-  borderRadius: "8px",
-  fontWeight: "500",
-  border: `1px solid ${Color.gray200}`,
+  color: "black",
+  bgColor: "white",
+  fontSize: "24px",
+  borderRadius: "",
+  fontWeight: "600",
+  border: `1px solid black`,
   shape: "",
   size: 0,
   src: "",
@@ -143,6 +145,7 @@ const ElPillButton = styled.button`
 
 const ElButton = styled.button`
   width: ${(props) => props.width};
+  min-width: ${(props) => props.minWidth};
   height: ${(props) => props.height};
   padding: ${(props) => props.padding};
   margin: ${(props) => props.margin};
@@ -159,9 +162,6 @@ const ElButton = styled.button`
   align-items: center;
   white-space: nowrap;
 
-  ${(props) =>
-    props.disabled &&
-    `background-color: ${Color.gray200}; color: ${Color.white}; border: 1px solid ${Color.gray200}; cursor: not-allowed;`}
 
   &:focus,
   &:active {
