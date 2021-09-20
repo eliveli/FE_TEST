@@ -19,11 +19,11 @@ const Result = () => {
     changeTempResult(result);
   }, [result]);
   
-  // 실제 사용할 리스트
+  // 실 사용 리스트
   const [tempResult, changeTempResult] = React.useState([]);
 
   const [number, plusNumber] = React.useState(1);
-  // let tempResult = result;
+
   //선택 취소
   const cancle = (choice) => {
     cancleChoice(contextDispatch, choice);
@@ -85,39 +85,26 @@ const Result = () => {
     }
   }
 
-
-//   //정렬하기
-//   const handleSortResult = (list) => {
-//     changeTempResult(list);
-//   }
-//   const sortList = (no, isUp, list) => {
-//     list.sort(function(a, b) { 
-//         if (isUp){
-//             return a[no] - b[no]; 
-//         } else {
-//             return b[no] - a[no]; 
-//         }
-//       }
-//     );
-//     handleSortResult(list);
-// }
-//   //(Fox or Golf , Up or Down)
-//   const handleSort = (isFox, isUp, list) => {
-//     if(isFox) {sortList(1, isUp, list);}
-//     else {sortList(2, isUp, list);}
-// }
+// 사용불가 서비스 알림
+const [alarm, handleAlarm] = React.useState(false);
+const showAlarm = () => {
+  handleAlarm(true);
+  setTimeout(function () {
+    handleAlarm(false);
+  }, 2500);
+};
 
   return(
   <Grid borderTop="3px solid #f4f4f4" position="relative" top="68px" margin="0 auto" >
 
-    <Grid display="flex" justify="space-between" align="center" borderBottom="8px solid #f4f4f4" height="100%">
-      <Grid display="flex" gap="40px" align="center" color="#C6C6C6" height="100%" >
-        <Text cursor={true} margin="0 0 0 20px" padding="10px 0">Alpha</Text>
-        <Text cursor={true} margin="0" padding="15px 0">Bravo</Text>
-        <Text cursor={true} margin="0" padding="15px 0">Charlie</Text>
-        <Text cursor={true} margin="0" padding="15px 0">Delta</Text>
-        <Text cursor={true} margin="0" padding="15px 0">Echo</Text>
-        <Text cursor={true} margin="0" borderBottom="5px solid #212121" color="#212121" padding="15px 0">Result</Text>
+    <Grid display="flex" justify="space-between" align="center" borderBottom="8px solid #f4f4f4" height="67px">
+      <Grid padding="0 0 0 20px" display="flex" gap="40px" align="center" color="#C6C6C6" height="100%" >
+        <Text _onClick={showAlarm} cursor={true}>Alpha</Text>
+        <Text _onClick={showAlarm} cursor={true}>Bravo</Text>
+        <Text _onClick={showAlarm} cursor={true}>Charlie</Text>
+        <Text _onClick={showAlarm} cursor={true}>Delta</Text>
+        <Text _onClick={showAlarm} cursor={true}>Echo</Text>
+        <Text cursor={true} borderBottom="5px solid #212121" color="#212121" padding="15px 0">Result</Text>
       </Grid>
       <Text margin="0 20px 0 0" color="#6F6F6F">project name</Text>
     </Grid>
@@ -129,8 +116,8 @@ const Result = () => {
             placeholder="search by name"
         ></Inp>
         <Button _onClick={goSearch} margin="0 0 0 0.5px" padding="0 14px" border="1px solid #7879F1" height="100%" color="#7879F1">search</Button>
-        <Button _onClick={showAll} margin="0 0 0 0.5px" padding="0 14px" border="1px solid #7879F1" height="100%" color="#7879F1">All</Button>
-        <Button margin="0 0 0 26px" padding="0 10px"  border="1px solid #7879F1" height="100%" color="#7879F1">download</Button>
+        <Button _onClick={showAll} margin="0 0 0 0.5px" padding="0 14px" border="1px solid #7879F1" height="100%" color="#7879F1" lineHeight="26px">show<br/>ALL</Button>
+        <Button _onClick={showAlarm} margin="0 0 0 26px" padding="0 10px"  border="1px solid #7879F1" height="100%" color="#7879F1">download</Button>
       </Grid>
     </Grid>
 
@@ -180,7 +167,11 @@ const Result = () => {
       <Text color="gray">&nbsp;&nbsp;검색 결과가 없습니다.</Text>
     )
     }
-    
+    <Grid position="absolute" top="93px" width="100%">
+      <CntAlertStyle fadeOut={!alarm}>
+          서비스 개선 중입니다. 만족스러운 경험을 드리고자 하니 양해 부탁드려요 :)
+      </CntAlertStyle>
+    </Grid>
   </Grid>
   )
 };
@@ -198,6 +189,30 @@ const Inp = styled.input`
     font-weight: 300;
     color:#c6c6c6;
   }
-`
+`;
+const CntAlertStyle = styled.div`
+  margin: 0 auto;
+  width: 80%;
+  height: 44px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 99px;
+  background-color: #C6C6C6;
 
+  line-height: 32px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  transition: all 0.5s;
+  ${(props) =>
+    props.fadeOut &&
+    ` opacity: 0;
+    `}
+`;
 export default Result;
